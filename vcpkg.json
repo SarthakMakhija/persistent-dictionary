@@ -1,0 +1,9 @@
+{
+    "name": "persistent-dictionary",
+    "version-string": "0.0.1",
+    "dependencies": [
+      "pmdk",
+      "libpmemobj-cpp",
+      "gtest"
+    ]
+  }
