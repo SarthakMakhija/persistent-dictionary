@@ -9,14 +9,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # include append-only-kv and dependencies
 add_subdirectory(src/append-only-kv)
+add_subdirectory(src/dictionary)
 
 # Enable unit/integration testing
 add_executable(append_only_kv_integration_tests "")
-
 target_sources(append_only_kv_integration_tests
         PRIVATE
         test/append-only-kv/AppendOnlyKv_integration_test.cpp
         test/append-only-kv/AppendOnlyKvFixture.h)
+
+add_executable(dictionary_integration_tests "")
+target_sources(dictionary_integration_tests
+        PRIVATE
+        test/dictionary/Dictionary_integration_test.cpp
+        test/dictionary/DictionaryFixture.h)
 
 find_package(GTest CONFIG REQUIRED)
 
@@ -43,4 +49,21 @@ target_link_libraries(append_only_kv_integration_tests
 add_test(
         NAME append_only_kv_integration_tests
         COMMAND $<TARGET_FILE:append_only_kv_integration_tests>
+)
+
+target_include_directories(dictionary_integration_tests
+        PRIVATE
+        ${LIBPMEMOBJ_INCLUDE_DIR}
+        ${LIBPMEM_INCLUDE_DIR})
+
+target_link_libraries(dictionary_integration_tests
+        PRIVATE
+        PersistentDictionary
+        GTest::gtest
+        GTest::gtest_main
+        ${LIBPMEM_LIBRARY} ${LIBPMEMOBJ_LIBRARY})
+
+add_test(
+        NAME dictionary_integration_tests
+        COMMAND $<TARGET_FILE:dictionary_integration_tests>
 )

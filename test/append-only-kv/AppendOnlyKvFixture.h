@@ -10,7 +10,7 @@ class AppendOnlyKvFixture : public ::testing::Test {
 
 private:
     AppendOnlyKv *kv;
-    const char *fileName = "./tests.log";
+    const char *fileName = "./append-only-kv-tests.log";
 
 public:
     void SetUp() {

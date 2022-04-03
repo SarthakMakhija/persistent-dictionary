@@ -1,20 +1,11 @@
 #ifndef _PersistentNode_
 #define _PersistentNode_
 
-#include <libpmemobj++/make_persistent.hpp>
 #include <libpmemobj++/make_persistent_array.hpp>
 #include <libpmemobj++/persistent_ptr.hpp>
-#include <libpmemobj++/transaction.hpp>
-#include <libpmemobj++/pool.hpp>
-#include <libpmemobj/pool_base.h>
-#include <cstddef>
-#include <iostream>
-#include <string>
 
 using pmem::obj::make_persistent;
 using pmem::obj::persistent_ptr;
-using pmem::obj::pool;
-using pmem::obj::transaction;
 
 namespace dictionary {
     namespace persistent {
