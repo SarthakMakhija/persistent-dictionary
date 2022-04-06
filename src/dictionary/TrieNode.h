@@ -33,16 +33,16 @@ namespace dictionary {
 
             void add(std::string word, pmem::obj::pool_base pmpool) {
                 TrieNode *current = this;
-                for (auto &ch: word) {
-                    int index = ch - 'a';
-                    if (!current->slots[index].get_ro().next) {
-                        transaction::run(pmpool, [&] {
+                transaction::run(pmpool, [&] {
+                    for (auto &ch: word) {
+                        int index = ch - 'a';
+                        if (!current->slots[index].get_ro().next) {
                             current->slots[index].get_rw().setNext(make_persistent<TrieNode>());
-                        });
+                        }
+                        current = current->slots[index].get_rw().next.get();
                     }
-                    current = current->slots[index].get_rw().next.get();
-                }
-                current->endOfWord = true;
+                    current->endOfWord = true;
+                });
             }
 
             bool contains(std::string word) {
